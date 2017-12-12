@@ -30,7 +30,7 @@
                                 document.querySelector('.j-result').innerHTML = `
                                     <div class="error-wrap">
                                         <div class="error-message-wrap">
-                                            <p>User does not exist</p>
+                                            <p>user does not exist</p>
                                         </div>
                                     </div>
                                 `
@@ -56,25 +56,28 @@
                                 fetch(`${res.repos_url}`)
                                     .then(res => res.json())
                                     .then(res => {
+                                        console.log(res);
                                         document.querySelector('.j-repos').innerHTML = res
                                             .map(el => `
-                                                <div class="repo-element">
-                                                    <p>${el.name}</p>
-                                                    <div class="forks-stars-wrap">
-                                                        <div class="icon-wraps">
-                                                            <div class="icon-image-wrap">
-                                                                <img class="icon-image" src="http://pngimg.com/uploads/star/star_PNG1595.png"/>
+                                                <a href="${el.html_url}" target="_blank">
+                                                    <div class="repo-element">
+                                                        <p>${el.name}</p>
+                                                        <div class="forks-stars-wrap">
+                                                            <div class="icon-wraps">
+                                                                <div class="icon-image-wrap">
+                                                                    <img class="icon-image" src="http://pngimg.com/uploads/star/star_PNG1595.png"/>
+                                                                </div>
+                                                                <p>${el.stargazers_count}</p>
                                                             </div>
-                                                            <p>${el.stargazers_count}</p>
-                                                        </div>
-                                                        <div class="icon-wraps">
-                                                            <div class="icon-image-wrap">
-                                                                <img class="icon-image" src="http://timhettler.github.io/sassconf-2015/slides/assets/svg/fork.svg"/>
+                                                            <div class="icon-wraps">
+                                                                <div class="icon-image-wrap">
+                                                                    <img class="icon-image" src="http://timhettler.github.io/sassconf-2015/slides/assets/svg/fork.svg"/>
+                                                                </div>
+                                                                <p>${el.forks_count}</p>
                                                             </div>
-                                                            <p>${el.forks_count}</p>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </a>
                                             `).join('');
                                     });
                             }
