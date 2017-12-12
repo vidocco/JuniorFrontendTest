@@ -17,7 +17,6 @@
         const debounceSearch = (event) => {
             const value = event.target.value;
             if (timeout) {
-                console.log('here');
                 clearTimeout(timeout);
                 timeout = null;
             }
@@ -26,9 +25,16 @@
                     fetch(`https://api.github.com/users/${event.target.value}`)
                         .then(res => res.json())
                         .then(res => {
-                            if (res.message === "Not Found") console.log(res.message);
-                            else {
-                                console.log(res);
+                            if (res.message === "Not Found") {
+                                document.getElementsByClassName('main-interface')[0].className += ' searched';
+                                document.querySelector('.j-result').innerHTML = `
+                                    <div class="error-wrap">
+                                        <div class="error-message-wrap">
+                                            <p>User does not exist</p>
+                                        </div>
+                                    </div>
+                                `
+                            } else {
                                 document.getElementsByClassName('main-interface')[0].className += ' searched';
                                 document.querySelector('.j-result').innerHTML = `
                                     <div class="user-profile-wrap">
@@ -36,9 +42,9 @@
                                             <img class="user-image" src=${res.avatar_url}/>
                                         </div>
                                         <div class="user-details">
-                                            <p>@${res.login}</p>
-                                            <p>${res.name}</p>
-                                            <p>${res.bio
+                                            <p class="user-details-username">@${res.login}</p>
+                                            <p class="user-details-name">${res.name}</p>
+                                            <p class="user-details-bio">${res.bio
                                                 ? res.bio
                                                 : 'this user doesn\'t seem to have a bio...'}</p>
                                         </div>
@@ -50,7 +56,6 @@
                                 fetch(`${res.repos_url}`)
                                     .then(res => res.json())
                                     .then(res => {
-                                        console.log(res);
                                         document.querySelector('.j-repos').innerHTML = res
                                             .map(el => `
                                                 <div class="repo-element">
@@ -76,8 +81,8 @@
                         });
                     timeout = null;
                 } else {
-                    document.querySelector('.j-results').innerHTML = '<p>please type something</p>';
-                    console.log('empty search');
+                    document.querySelector('.j-result').innerHTML = '';
+                    document.getElementsByClassName('main-interface')[0].className = 'main-interface';
                 }
             }, 500);
         }
