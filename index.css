@@ -1,0 +1,97 @@
+* {
+  font-family: 'Roboto';
+  font-weight: 300;
+}
+
+body {
+  background-color: #F0F0F0;
+}
+
+.main-interface {
+  margin: auto;
+  width: 550px;
+  height: 80px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.383);
+  z-index: 2;
+}
+
+.searched {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.j-search-bar {
+  flex-shrink: 0;
+  height: 30px;
+  width: 500px;
+  border: 1px solid rgba(128, 128, 128, 0.479);
+  border-radius: 3px;
+}
+
+.user-profile-wrap {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-details {
+  width: 70%;
+}
+
+.j-result {
+  z-index: 1;
+  width: 550px;
+  margin: auto;
+  background-color: white;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 12px 20px 0px rgba(0, 0, 0, 0.383);
+}
+
+.j-repos {
+  border-top: 1px solid black;
+  height: 500px;
+  width: 500px;
+}
+
+.repo-element {
+  margin: auto;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.479);
+}
+
+.repo-element > div > p {
+  float: left;
+}
+
+.user-result:hover {
+  background-color: rgba(128, 128, 128, 0.356);
+}
+
+.user-image-wrap {
+  height: 150px;
+  width: 150px;
+  margin: 15px;
+  margin-left: 0;
+}
+
+.user-image {
+  height: 100%;
+}

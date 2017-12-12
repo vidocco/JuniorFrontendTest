@@ -3,10 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Hello!</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,500" rel="stylesheet">
 </head>
 <body>
-    <input class="j-search-bar" type="text" />
-    <div class="j-results">
+    <div class="main-interface">
+        <input class="j-search-bar" placeholder="Search username..." type="text" />
+    </div>
+    <div class="j-result">
     </div>
     <script>
         let timeout = null;
@@ -19,19 +23,50 @@
             }
             timeout = setTimeout(() => {
                 if (value) {
-                    fetch(`https://api.github.com/search/users?q=${event.target.value}`)
+                    fetch(`https://api.github.com/users/${event.target.value}`)
                         .then(res => res.json())
-                        .then(res => document.querySelector('.j-results').innerHTML = res.items
-                            .map(el => `<div class="user-result">
-                                <div class="user-image-wrap">
-                                    <img class="user-image" src=${el.avatar_url}/>
-                                </div>
-                                <p>${el.login}</p>
-                            </div>`)
-                            .join(''));
+                        .then(res => {
+                            if (res.message === "Not Found") console.log(res.message);
+                            else {
+                                console.log(res);
+                                document.getElementsByClassName('main-interface')[0].className += ' searched';
+                                document.querySelector('.j-result').innerHTML = `
+                                    <div class="user-profile-wrap">
+                                        <div class="user-image-wrap">
+                                            <img class="user-image" src=${res.avatar_url}/>
+                                        </div>
+                                        <div class="user-details">
+                                            <p>@${res.login}</p>
+                                            <p>${res.name}</p>
+                                            <p>${res.bio
+                                                ? res.bio
+                                                : 'this user doesn\'t seem to have a bio...'}</p>
+                                        </div>
+                                    </div>
+                                    <h1>Repositories</h1>
+                                    <div class="j-repos">
+                                    </div>
+                                `;
+                                fetch(`${res.repos_url}`)
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        console.log(res);
+                                        document.querySelector('.j-repos').innerHTML = res
+                                            .map(el => `
+                                                <div class="repo-element">
+                                                    <p>${el.name}</p>
+                                                    <div>
+                                                        <p>${el.stargazers_count}</p>
+                                                        <p>${el.forks_count}</p>
+                                                    </div>
+                                                </div>
+                                            `).join('');
+                                    });
+                            }
+                        });
                     timeout = null;
                 } else {
-                    document.querySelector('.j-results').innerHTML = '<p>type something to start searching</p>';
+                    document.querySelector('.j-results').innerHTML = '<p>please type something</p>';
                     console.log('empty search');
                 }
             }, 500);
