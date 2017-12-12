@@ -55,9 +55,19 @@
                                             .map(el => `
                                                 <div class="repo-element">
                                                     <p>${el.name}</p>
-                                                    <div>
-                                                        <p>${el.stargazers_count}</p>
-                                                        <p>${el.forks_count}</p>
+                                                    <div class="forks-stars-wrap">
+                                                        <div class="icon-wraps">
+                                                            <div class="icon-image-wrap">
+                                                                <img class="icon-image" src="http://pngimg.com/uploads/star/star_PNG1595.png"/>
+                                                            </div>
+                                                            <p>${el.stargazers_count}</p>
+                                                        </div>
+                                                        <div class="icon-wraps">
+                                                            <div class="icon-image-wrap">
+                                                                <img class="icon-image" src="http://timhettler.github.io/sassconf-2015/slides/assets/svg/fork.svg"/>
+                                                            </div>
+                                                            <p>${el.forks_count}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             `).join('');
